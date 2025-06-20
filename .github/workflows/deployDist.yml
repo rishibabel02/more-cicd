@@ -1,8 +1,16 @@
 name: Deploy Dist
-# on: [push, workflow_dispatch] can be written in both ways
+# on: [push, workflow_dispatch] 
+# can be written in both ways (but If I have to specify a trigger on a particular branch then this syntax can't be used)
 on: 
-    - push
-    - workflow_dispatch
+    push:
+        branches:
+            - main
+            - 'feature/**'
+        paths-ignore:
+            - '.github/workflows/*'
+            - README.md
+    workflow_dispatch:
+  
 jobs:
     test:
         runs-on: ubuntu-latest
@@ -56,7 +64,7 @@ jobs:
               with:
                 path: ~/.npm
                 key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
-                
+
             - name: Install dependencies
               run: npm ci  
               
