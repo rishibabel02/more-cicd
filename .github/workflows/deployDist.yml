@@ -19,8 +19,8 @@ jobs:
               with: 
                 node-version: 18
 
-            - name: Node Version
-              run: node -v
+            # - name: Node Version
+            #   run: node -v
 
             - name: Install dependencies
               run: npm ci #clean install 
@@ -29,3 +29,24 @@ jobs:
               run: npm run test
 
             #   this is a comment 
+
+
+    deploy:
+        runs-on: ubuntu-latest
+        steps: 
+            - name: Get Code
+              uses: actions/checkout@v4
+
+            - name: Install Node.js
+              uses: actions/setup-node@v4
+              with: 
+                node-version: 18
+            
+            - name: Install dependencies
+              run: npm ci  
+              
+            - name: Build Project
+              run: npm run build 
+              
+            - name: Deploy
+              run: echo "deploy sucess!"
